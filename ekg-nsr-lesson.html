@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บทเรียนออนไลน์ EKG · Normal Sinus Rhythm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-fallback:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",sans-serif;
+    --font-display:'Mali',var(--font-fallback);
+    --font-body:'Sarabun',var(--font-fallback);
+    --bg:#FFF7FB;
+    --card:#FFFFFF;
+    --pink:#FF7CA3;
+    --pink-deep:#F0507C;
+    --pink-soft:#FFE3EE;
+    --mint:#2FBB92;
+    --mint-soft:#DEF6EC;
+    --lavender:#8C7AE6;
+    --lavender-soft:#EEE9FF;
+    --ink:#4A2E3B;
+    --ink-soft:#9C8792;
+    --line:#F6E2ED;
+    --paper:#FFF9F7;
+    --paper-line:#F6CBD9;
+    --paper-line-strong:#F0A6BE;
+    --paper-ink:#4A2E3B;
+    --radius:22px;
+    --radius-sm:14px;
+    --shadow-pink:0 12px 28px -14px rgba(240,80,124,.5);
+    --shadow-soft:0 8px 22px -12px rgba(154,110,140,.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 8% 0%, var(--lavender-soft) 0%, transparent 42%),
+      radial-gradient(circle at 100% 10%, var(--mint-soft) 0%, transparent 38%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-weight:400;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .hidden{display:none !important;}
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  a{color:var(--pink-deep);}
+  label{cursor:pointer;}
+  h1,h2,h3,.font-display{font-family:var(--font-display);}
+
+  /* ---------- Pure-CSS navigation & gating: works with zero JavaScript.
+     Hidden checkboxes/radios + <label for="..."> is native browser
+     behaviour; :has() then reveals/locks the right panels. ---------- */
+  #lesson{display:none;}
+  body:has(#enterToggle:checked) #landing{display:none;}
+  body:has(#enterToggle:checked) #lesson{display:block;}
+
+  #howtoPanel{display:none;}
+  body:has(#howtoToggle:checked) #howtoPanel{display:block;}
+
+  .tab-panel{display:none;}
+  body:has(#tabPre:checked) #tab-pre{display:block;}
+  body:has(#tabContent:checked) #tab-content{display:block;}
+  body:has(#tabPost:checked) #tab-post{display:block;}
+  body:has(#tabPre:checked) label[for="tabPre"],
+  body:has(#tabContent:checked) label[for="tabContent"],
+  body:has(#tabPost:checked) label[for="tabPost"]{
+    background:var(--pink);color:#fff;box-shadow:var(--shadow-pink);
+  }
+
+  /* step 2/3 start locked until the previous confirm checkbox is checked */
+  label[for="tabContent"],label[for="tabPost"]{opacity:.55;pointer-events:none;}
+  body:has(#preTestDone:checked) label[for="tabContent"]{opacity:1;pointer-events:auto;}
+  body:has(#contentDone:checked) label[for="tabPost"]{opacity:1;pointer-events:auto;}
+
+  label[for="tabContent"] .lock-badge,label[for="tabPost"] .lock-badge{display:inline;}
+  label .check-badge{display:none;}
+  body:has(#preTestDone:checked) label[for="tabContent"] .lock-badge{display:none;}
+  body:has(#preTestDone:checked) label[for="tabPre"] .check-badge{display:inline;}
+  body:has(#contentDone:checked) label[for="tabPost"] .lock-badge{display:none;}
+  body:has(#contentDone:checked) label[for="tabContent"] .check-badge{display:inline;}
+  body:has(#postTestDone:checked) label[for="tabPost"] .check-badge{display:inline;}
+
+  .confirm-btn{background:var(--mint);}
+  body:has(#preTestDone:checked) label[for="preTestDone"],
+  body:has(#contentDone:checked) label[for="contentDone"],
+  body:has(#postTestDone:checked) label[for="postTestDone"]{
+    background:var(--ink-soft);cursor:default;
+  }
+
+  /* ---------- Mascot ---------- */
+  .mascot{width:150px;height:auto;display:block;margin:0 auto;}
+  .mascot .body-shape{animation:mascotBounce 2.6s ease-in-out infinite;}
+  @keyframes mascotBounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+  .mascot .eyes{animation:mascotBlink 4.5s ease-in-out infinite;transform-origin:100px 78px;}
+  @keyframes mascotBlink{
+    0%,92%,100%{transform:scaleY(1);}
+    95%{transform:scaleY(.12);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .mascot .body-shape,.mascot .eyes{animation:none;}
+  }
+
+  /* ---------- Landing ---------- */
+  .landing{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:3rem 1.25rem 4rem;}
+  .landing-card{width:100%;max-width:480px;text-align:center;}
+  .landing-card h1{font-size:1.75rem;font-weight:700;margin:1.25rem 0 .25rem;color:var(--ink);}
+  .landing-card .subtitle{color:var(--pink-deep);font-size:1.05rem;font-weight:600;margin:0 0 1.75rem;font-family:var(--font-display);}
+  .ghost-btn{
+    display:inline-block;background:#fff;border:2px solid var(--line);color:var(--ink-soft);
+    padding:.6rem 1.2rem;border-radius:999px;font-size:.9rem;font-family:var(--font-display);font-weight:600;
+    transition:border-color .15s,color .15s;
+  }
+  .ghost-btn:hover{border-color:var(--pink);color:var(--pink-deep);}
+  .howto-panel{
+    text-align:left;background:var(--card);border:2px solid var(--line);
+    border-radius:var(--radius);padding:1.2rem 1.4rem;margin-top:1rem;
+    font-size:.94rem;color:var(--ink-soft);box-shadow:var(--shadow-soft);
+  }
+  .howto-panel ol{margin:.5rem 0 0;padding-left:1.2rem;}
+  .howto-panel li{margin-bottom:.5rem;}
+  .howto-panel strong{color:var(--ink);}
+
+  .entry-form{margin-top:1.75rem;display:flex;flex-direction:column;gap:1rem;text-align:left;}
+  .field label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:.4rem;font-weight:600;}
+  .field-input{position:relative;}
+  .field-input svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:19px;height:19px;color:var(--pink);}
+  .field-input input{
+    width:100%;background:#fff;border:2px solid var(--line);color:var(--ink);
+    border-radius:999px;padding:.8rem 1rem .8rem 2.7rem;font-size:.95rem;transition:border-color .15s;
+  }
+  .field-input input:focus{outline:none;border-color:var(--pink);}
+
+  .enter-btn{
+    margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.6rem;
+    background:var(--pink);color:#fff;border:none;padding:1rem 1.4rem;border-radius:999px;
+    font-size:1.05rem;font-weight:700;font-family:var(--font-display);letter-spacing:.01em;
+    box-shadow:var(--shadow-pink);transition:transform .12s;
+  }
+  .enter-btn:hover{transform:translateY(-2px);}
+  .enter-btn:active{transform:translateY(0);}
+  .heart-icon{width:20px;height:20px;color:#fff;animation:heartbeat 1.15s ease-in-out infinite;}
+  @keyframes heartbeat{
+    0%,100%{transform:scale(1);}
+    20%{transform:scale(1.2);}
+    35%{transform:scale(.95);}
+    50%{transform:scale(1.15);}
+    65%{transform:scale(1);}
+  }
+  @media (prefers-reduced-motion:reduce){.heart-icon{animation:none;}}
+
+  /* ---------- Lesson shell ---------- */
+  .lesson{max-width:880px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
+  .lesson-header{
+    display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+    background:var(--card);border:2px solid var(--line);border-radius:var(--radius);
+    padding:1.1rem 1.4rem;margin-bottom:1.5rem;box-shadow:var(--shadow-soft);
+  }
+  .lesson-header .greeting{margin:0;font-size:1.1rem;color:var(--ink);font-family:var(--font-display);font-weight:700;}
+  .lesson-header .org{margin:.2rem 0 0;font-size:.85rem;color:var(--ink-soft);}
+  .mini-mascot{width:46px;height:46px;flex-shrink:0;}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex;gap:.6rem;margin-bottom:1.75rem;overflow-x:auto;padding-bottom:.2rem;}
+  .tab-btn{
+    background:#fff;border:2px solid var(--line);color:var(--ink-soft);
+    padding:.7rem 1rem;font-size:.88rem;font-weight:600;font-family:var(--font-display);white-space:nowrap;
+    border-radius:999px;display:flex;align-items:center;gap:.45rem;transition:all .15s;
+  }
+  .tab-btn .num{
+    font-size:.78rem;width:20px;height:20px;border-radius:50%;background:var(--pink-soft);color:var(--pink-deep);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;
+  }
+  body:has(#tabPre:checked) label[for="tabPre"] .num,
+  body:has(#tabContent:checked) label[for="tabContent"] .num,
+  body:has(#tabPost:checked) label[for="tabPost"] .num{background:rgba(255,255,255,.3);color:#fff;}
+
+  .panel-card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-soft);}
+  .panel-card p{color:var(--ink-soft);font-size:.96rem;}
+  .panel-card h2{margin-top:0;font-size:1.3rem;color:var(--ink);}
+
+  .external-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--ink-soft);font-size:.82rem;text-decoration:none;}
+  .external-link:hover{color:var(--pink-deep);}
+  .external-link svg{width:14px;height:14px;}
+
+  /* ---------- Native quiz ---------- */
+  .quiz-q{background:var(--lavender-soft);border-radius:var(--radius-sm);padding:1.1rem 1.3rem;margin-bottom:1rem;}
+  .quiz-q .q-title{font-weight:700;color:var(--ink);margin:0 0 .8rem;font-size:.98rem;}
+  .quiz-opt{display:flex;align-items:center;gap:.7rem;background:#fff;border:2px solid var(--line);border-radius:999px;padding:.6rem 1rem;margin-bottom:.55rem;font-size:.92rem;color:var(--ink);transition:border-color .15s,background .15s;}
+  .quiz-opt:hover{border-color:var(--pink);}
+  .quiz-opt input{accent-color:var(--pink);width:16px;height:16px;flex-shrink:0;}
+  .quiz-opt:has(input:checked){border-color:var(--pink);background:var(--pink-soft);font-weight:600;}
+  .quiz-opt.correct-answer{border-color:var(--mint);background:var(--mint-soft);}
+  .q-feedback{font-size:.85rem;font-weight:700;margin-top:.3rem;min-height:1.2em;}
+  .q-feedback.ok{color:var(--mint);}
+  .q-feedback.no{color:var(--pink-deep);}
+  .quiz-score-banner{background:#fff;border-radius:var(--radius-sm);padding:1.1rem 1.3rem;margin-bottom:1.2rem;text-align:center;box-shadow:var(--shadow-soft);}
+  .quiz-score-banner .big-score{font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--pink-deep);}
+
+  .confirm-btn{
+    display:inline-flex;align-items:center;gap:.5rem;color:#fff;border:none;
+    padding:.95rem 1.5rem;border-radius:999px;font-size:1rem;font-weight:700;
+    font-family:var(--font-display);box-shadow:var(--shadow-soft);margin-top:1.2rem;
+  }
+
+  /* ---------- Content tab ---------- */
+  .content-section{margin-bottom:2.5rem;}
+  .content-section h2{font-size:1.2rem;color:var(--ink);margin-bottom:.6rem;}
+  .content-section h3{font-size:1.05rem;color:var(--pink-deep);margin:1.4rem 0 .5rem;font-family:var(--font-display);}
+  .content-section p{color:var(--ink-soft);font-size:.96rem;max-width:66ch;}
+  .content-section ul,.content-section ol{color:var(--ink-soft);font-size:.96rem;max-width:66ch;padding-left:1.3rem;}
+  .content-section li{margin-bottom:.35rem;}
+  .content-section li strong{color:var(--ink);}
+
+  .criteria-list{list-style:none;padding:0;margin:1rem 0;display:flex;flex-direction:column;gap:.6rem;}
+  .criteria-list li{
+    background:var(--lavender-soft);border-radius:var(--radius-sm);
+    padding:.85rem 1.1rem;display:flex;gap:.85rem;align-items:flex-start;
+  }
+  .criteria-list .idx{
+    font-family:var(--font-display);color:#fff;background:var(--lavender);font-weight:700;
+    flex-shrink:0;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;
+  }
+  .criteria-list .val{font-family:var(--font-display);color:var(--pink-deep);font-weight:700;font-size:.9rem;}
+
+  /* ECG paper diagram */
+  .paper-panel{
+    background-color:var(--paper);border-radius:var(--radius-sm);overflow:hidden;
+    border:2px solid var(--paper-line-strong);margin:1.2rem 0;
+    background-image:
+      repeating-linear-gradient(to right,var(--paper-line) 0 1px,transparent 1px 5px),
+      repeating-linear-gradient(to bottom,var(--paper-line) 0 1px,transparent 1px 5px),
+      repeating-linear-gradient(to right,var(--paper-line-strong) 0 1.4px,transparent 1.4px 25px),
+      repeating-linear-gradient(to bottom,var(--paper-line-strong) 0 1.4px,transparent 1.4px 25px);
+  }
+  .paper-panel svg{display:block;width:100%;height:auto;}
+  .paper-panel .trace-line{fill:none;stroke:var(--paper-ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .paper-panel .dim-line{stroke:#B4728F;stroke-width:1;}
+  .paper-panel .dim-text{fill:#B4728F;font-family:var(--font-body);font-weight:600;font-size:9px;}
+  .paper-panel .wave-label{fill:var(--paper-ink);font-family:var(--font-display);font-size:12px;font-weight:700;}
+
+  .calib-note{font-size:.86rem;color:var(--ink-soft);border-left:3px solid var(--mint);padding-left:.9rem;margin:.9rem 0 0;}
+
+  .real-image-card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius-sm);padding:1rem;margin:1.2rem 0;}
+  .real-image-card img{width:100%;height:auto;display:block;border-radius:8px;background:#fff;}
+  .real-image-card .caption{font-size:.82rem;color:var(--ink-soft);margin:.7rem 0 0;text-align:center;}
+  .real-image-card .caption a{color:var(--ink-soft);text-decoration:underline;}
+
+  /* Mnemonic sentence */
+  .mnemonic-banner{background:var(--pink-soft);border-radius:var(--radius-sm);padding:1.1rem 1.3rem;margin:1rem 0;}
+  .mnemonic-banner p{color:var(--ink);font-size:1.05rem;margin:0;font-weight:700;font-family:var(--font-display);}
+  .mnemonic-banner span.small{display:block;color:var(--ink-soft);font-size:.82rem;margin-top:.4rem;font-weight:400;font-family:var(--font-body);}
+
+  /* Five-finger mnemonic */
+  .fingers-mnemonic{margin:1.4rem 0;}
+  .fingers-row{display:flex;align-items:flex-end;gap:.6rem;height:120px;}
+  .finger{
+    flex:1;background:linear-gradient(180deg,var(--pink),var(--pink-deep));
+    border-radius:999px 999px 8px 8px;display:flex;align-items:flex-start;justify-content:center;
+    padding-top:.5rem;position:relative;
+  }
+  .finger .tip{font-family:var(--font-display);font-weight:700;color:#fff;font-size:.9rem;}
+  .labels-row{display:flex;gap:.6rem;margin-top:.6rem;}
+  .labels-row .lab{flex:1;text-align:center;font-size:.78rem;color:var(--ink-soft);}
+  .labels-row .lab b{display:block;color:var(--ink);font-size:.83rem;margin-bottom:.15rem;font-family:var(--font-display);}
+
+  /* Steps */
+  .steps{list-style:none;padding:0;margin:1rem 0;counter-reset:step;}
+  .steps li{counter-increment:step;position:relative;padding:.2rem 0 .2rem 2.5rem;margin-bottom:1rem;color:var(--ink-soft);font-size:.95rem;}
+  .steps li::before{
+    content:counter(step);position:absolute;left:0;top:0;width:1.8rem;height:1.8rem;border-radius:50%;
+    background:var(--mint);color:#fff;font-family:var(--font-display);font-size:.85rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps li strong{color:var(--ink);}
+
+  .compare-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem;}
+  .compare-table th,.compare-table td{text-align:left;padding:.7rem .8rem;border-bottom:1px solid var(--line);color:var(--ink-soft);}
+  .compare-table th{color:var(--ink);font-weight:700;font-family:var(--font-display);}
+  .compare-table td:first-child{color:var(--ink);font-weight:600;}
+
+  /* Score widget */
+  .score-widget{margin-top:1.6rem;background:var(--mint-soft);border-radius:var(--radius-sm);padding:1.3rem;}
+  .score-widget h3{margin-top:0;font-size:1.05rem;color:var(--ink);font-family:var(--font-display);}
+  .score-widget p{color:var(--ink-soft);font-size:.88rem;}
+  .primary-btn{background:var(--mint);color:#fff;border:none;border-radius:999px;padding:.7rem 1.3rem;font-weight:700;font-size:.9rem;font-family:var(--font-display);}
+  .score-result{margin-top:1.3rem;}
+  .bars{display:flex;gap:2rem;align-items:flex-end;height:140px;margin-bottom:.8rem;}
+  .bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;width:80px;}
+  .bar-col .pct{font-family:var(--font-display);color:var(--ink);font-size:.85rem;margin-bottom:.35rem;font-weight:700;}
+  .bar{width:44px;border-radius:10px 10px 4px 4px;transition:height .5s ease;}
+  .bar.pre{background:var(--lavender);}
+  .bar.post{background:var(--pink);}
+  .bar-col span.tag{margin-top:.5rem;font-size:.78rem;color:var(--ink-soft);}
+  #scoreMsg{color:var(--ink);font-size:.92rem;background:#fff;border-radius:var(--radius-sm);padding:.85rem 1rem;font-weight:600;}
+
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1rem 0;}
+  .table-scroll .compare-table{margin:0;min-width:480px;}
+
+  /* ---------- Tablet (portrait) ---------- */
+  @media (max-width:900px){
+    .lesson{padding:1.25rem 1rem 4rem;}
+    .panel-card{padding:1.3rem;}
+    .form-frame{height:70vh;}
+  }
+
+  /* ---------- Phones ---------- */
+  @media (max-width:640px){
+    .lesson-header{flex-direction:column;align-items:flex-start;gap:.75rem;}
+    .fingers-row{height:96px;}
+    .landing{padding:2.25rem 1rem 3rem;}
+    .panel-card{padding:1.1rem;}
+    .tabs{gap:.4rem;}
+    .tab-btn{padding:.65rem .8rem;font-size:.82rem;}
+    /* keep form inputs at 16px so iOS Safari doesn't zoom in on focus */
+    .field-input input,.score-inputs input{font-size:16px;}
+    .quiz-opt{padding:.75rem 1rem;min-height:44px;}
+    .quiz-q{padding:.9rem 1rem;}
+    .confirm-btn{width:100%;justify-content:center;text-align:center;}
+    .bars{gap:1.2rem;}
+  }
+
+  @media (max-width:400px){
+    .landing-card h1{font-size:1.4rem;}
+    .fingers-row{gap:.35rem;}
+    .labels-row{gap:.35rem;}
+    .labels-row .lab{font-size:.72rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden native controls that drive all navigation & gating via CSS
+     :has() — clicking their <label> works with zero JavaScript. -->
+<input type="checkbox" id="enterToggle" class="visually-hidden" aria-hidden="true">
+<input type="checkbox" id="howtoToggle" class="visually-hidden" aria-hidden="true">
+<input type="radio" name="tabgroup" id="tabPre" class="visually-hidden" checked aria-hidden="true">
+<input type="radio" name="tabgroup" id="tabContent" class="visually-hidden" aria-hidden="true">
+<input type="radio" name="tabgroup" id="tabPost" class="visually-hidden" aria-hidden="true">
+<input type="checkbox" id="preTestDone" class="visually-hidden" aria-hidden="true">
+<input type="checkbox" id="contentDone" class="visually-hidden" aria-hidden="true">
+<input type="checkbox" id="postTestDone" class="visually-hidden" aria-hidden="true">
+
+<div class="app">
+
+  <!-- ============ LANDING ============ -->
+  <section id="landing" class="landing">
+    <div class="landing-card">
+      <svg class="mascot" viewBox="0 0 200 180" aria-hidden="true">
+        <g class="body-shape">
+          <path fill="#FF8FB3" d="M100,172 C38,120 8,80 8,50 C8,20 34,4 60,4 C82,4 96,15 100,34 C104,15 118,4 140,4 C166,4 192,20 192,50 C192,80 162,120 100,172 Z"/>
+          <ellipse cx="55" cy="35" rx="16" ry="9" fill="#ffffff" opacity=".35"/>
+          <g class="eyes">
+            <ellipse cx="78" cy="78" rx="6.5" ry="9" fill="#4A2E3B"/>
+            <ellipse cx="122" cy="78" rx="6.5" ry="9" fill="#4A2E3B"/>
+          </g>
+          <ellipse cx="62" cy="100" rx="13" ry="7" fill="#F0507C" opacity=".4"/>
+          <ellipse cx="138" cy="100" rx="13" ry="7" fill="#F0507C" opacity=".4"/>
+          <path d="M84,110 Q100,122 116,110" stroke="#4A2E3B" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <h1>บทเรียนออนไลน์ การอ่าน EKG ขั้นพื้นฐาน</h1>
+      <p class="subtitle">Normal Sinus Rhythm 🩷</p>
+
+      <label for="howtoToggle" class="ghost-btn">ดูวิธีใช้งานบทเรียน</label>
+      <div id="howtoPanel" class="howto-panel">
+        <p style="margin:0;color:var(--ink);">บทเรียนนี้แบ่งเป็น 3 ขั้นตอน เรียงตามลำดับ ต้องทำให้จบทีละขั้นก่อนถึงจะไปขั้นถัดไปได้นะ:</p>
+        <ol>
+          <li><strong>แบบทดสอบก่อนเรียน</strong> — ทำแบบทดสอบสั้น ๆ ในหน้านี้เลย เพื่อประเมินความรู้พื้นฐานของตัวเองก่อนเริ่มเรียน แล้วกดปุ่มยืนยันด้านล่างฟอร์ม</li>
+          <li><strong>เนื้อหาบทเรียน</strong> — จะปลดล็อกให้ก็ต่อเมื่อยืนยันว่าทำแบบทดสอบก่อนเรียนแล้ว อ่านเรื่อง Normal Sinus Rhythm แบบละเอียด พร้อมทริคจำ 5 นิ้วที่จำง่ายและใช้ได้จริง</li>
+          <li><strong>แบบทดสอบหลังเรียน</strong> — จะปลดล็อกให้ก็ต่อเมื่อกดยืนยันว่าเรียนเนื้อหาจบแล้ว ทำเสร็จแล้วกรอกคะแนนเทียบกับก่อนเรียนดูพัฒนาการของตัวเองได้เลย</li>
+        </ol>
+        <p>กรอกชื่อและหน่วยงานด้านล่าง (ไม่กรอกก็เข้าเรียนได้นะ) แล้วกดปุ่ม “เข้าสู่บทเรียน” ได้เลย</p>
+      </div>
+
+      <div class="entry-form">
+        <div class="field">
+          <label for="nameInput">ชื่อ-นามสกุล</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+            <input id="nameInput" type="text" placeholder="เช่น สมหญิง ใจดี">
+          </div>
+        </div>
+        <div class="field">
+          <label for="orgInput">หน่วยงาน</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v16"/><path d="M15 21V10a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v11"/><line x1="4" y1="21" x2="20" y2="21"/></svg>
+            <input id="orgInput" type="text" placeholder="เช่น หอผู้ป่วยอายุรกรรม โรงพยาบาล...">
+          </div>
+        </div>
+        <label for="enterToggle" class="enter-btn">
+          <svg class="heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-9.3-8.5C1 9.7 1.8 6.4 4.6 5.1c2.2-1 4.6-.2 5.9 1.6l1.5 2 1.5-2c1.3-1.8 3.7-2.6 5.9-1.6 2.8 1.3 3.6 4.6 1.9 7.4C18.7 16.65 12 21 12 21z"/></svg>
+          เข้าสู่บทเรียน
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LESSON ============ -->
+  <section id="lesson" class="lesson">
+    <div class="lesson-header">
+      <div>
+        <p class="greeting" id="greetingText">ยินดีต้อนรับเข้าสู่บทเรียน 💖</p>
+        <p class="org" id="userOrg"></p>
+      </div>
+      <svg class="mini-mascot" viewBox="0 0 200 180" aria-hidden="true">
+        <path fill="#FF8FB3" d="M100,172 C38,120 8,80 8,50 C8,20 34,4 60,4 C82,4 96,15 100,34 C104,15 118,4 140,4 C166,4 192,20 192,50 C192,80 162,120 100,172 Z"/>
+        <ellipse cx="78" cy="78" rx="7" ry="10" fill="#4A2E3B"/>
+        <ellipse cx="122" cy="78" rx="7" ry="10" fill="#4A2E3B"/>
+        <path d="M84,110 Q100,122 116,110" stroke="#4A2E3B" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <label class="tab-btn" for="tabPre"><span class="num">1</span>แบบทดสอบก่อนเรียน<span class="check-badge">✅</span></label>
+      <label class="tab-btn" for="tabContent"><span class="num">2</span>เนื้อหาบทเรียน<span class="lock-badge">🔒</span><span class="check-badge">✅</span></label>
+      <label class="tab-btn" for="tabPost"><span class="num">3</span>แบบทดสอบหลังเรียน<span class="lock-badge">🔒</span><span class="check-badge">✅</span></label>
+    </nav>
+
+    <!-- Tab 1: Pre-test -->
+    <div id="tab-pre" class="tab-panel">
+      <div class="panel-card">
+        <h2>แบบทดสอบก่อนเรียน 📝</h2>
+        <p>แบบทดสอบชุดนี้เข้มข้นขึ้นกว่าเดิม เหมาะสำหรับทีม RHT STEMI มีทั้งโจทย์คำนวณและโจทย์สถานการณ์ ตอบครบ 10 ข้อแล้วกดปุ่มด้านล่างเพื่อดูคะแนนและปลดล็อกเนื้อหาบทเรียนนะ</p>
+
+        <div class="quiz-q">
+          <p class="q-title">1. ถ้าระยะห่างระหว่าง R wave สองจุดเท่ากับ 4 ช่องใหญ่พอดี อัตราการเต้นของหัวใจโดยประมาณ (ใช้สูตร 300/จำนวนช่องใหญ่) คือเท่าใด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ1" value="a">A. 50 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ1" value="b">B. 75 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ1" value="c">C. 100 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ1" value="d">D. 150 ครั้ง/นาที</label>
+          <p class="q-feedback" id="preQ1fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">2. ผู้ป่วยมี P wave นำหน้าทุก QRS, PR interval คงที่ 0.14 วินาที, QRS แคบ, จังหวะสม่ำเสมอ, อัตรา 132 ครั้ง/นาที ข้อใดอธิบายถูกต้องที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ2" value="a">A. Normal sinus rhythm</label>
+          <label class="quiz-opt"><input type="radio" name="preQ2" value="b">B. Sinus tachycardia</label>
+          <label class="quiz-opt"><input type="radio" name="preQ2" value="c">C. Supraventricular tachycardia</label>
+          <label class="quiz-opt"><input type="radio" name="preQ2" value="d">D. First-degree AV block</label>
+          <p class="q-feedback" id="preQ2fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">3. เพื่อยืนยันว่าจังหวะเป็น "sinus" (มาจาก SA node) จริง ควรดู P wave ใน lead ใดเป็นหลัก และควรมีลักษณะอย่างไร</p>
+          <label class="quiz-opt"><input type="radio" name="preQ3" value="a">A. Lead aVR หัวคว่ำ</label>
+          <label class="quiz-opt"><input type="radio" name="preQ3" value="b">B. Lead II หัวตั้ง (positive)</label>
+          <label class="quiz-opt"><input type="radio" name="preQ3" value="c">C. Lead V1 สองเฟส (biphasic)</label>
+          <label class="quiz-opt"><input type="radio" name="preQ3" value="d">D. Lead III แบนราบ</label>
+          <p class="q-feedback" id="preQ3fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">4. ขณะติดตามคลื่นไฟฟ้าหัวใจผู้ป่วยที่ตัวสั่นจากความหนาว เส้นฐาน (baseline) สั่นไหวถี่ ๆ ทำให้ P wave ดูไม่ชัด ข้อใดคือการกระทำที่เหมาะสมที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ4" value="a">A. รายงานแพทย์ทันทีว่าพบ atrial fibrillation</label>
+          <label class="quiz-opt"><input type="radio" name="preQ4" value="b">B. ปรับความอบอุ่นให้ผู้ป่วย ตรวจสอบการติด electrode และประเมินซ้ำก่อนสรุปจังหวะ</label>
+          <label class="quiz-opt"><input type="radio" name="preQ4" value="c">C. เพิ่มขนาดยาควบคุมจังหวะหัวใจ</label>
+          <label class="quiz-opt"><input type="radio" name="preQ4" value="d">D. เปลี่ยนไปดู lead อื่นทันทีโดยไม่ตรวจสอบสาเหตุ</label>
+          <p class="q-feedback" id="preQ4fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">5. PR interval วัดจากจุดใดถึงจุดใด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ5" value="a">A. เริ่มต้น P wave ถึงจุดเริ่มต้น QRS complex</label>
+          <label class="quiz-opt"><input type="radio" name="preQ5" value="b">B. จุดสิ้นสุด P wave ถึงจุดสิ้นสุด QRS complex</label>
+          <label class="quiz-opt"><input type="radio" name="preQ5" value="c">C. จุดสูงสุดของ P wave ถึงจุดสูงสุดของ R wave</label>
+          <label class="quiz-opt"><input type="radio" name="preQ5" value="d">D. เริ่มต้น QRS ถึงสิ้นสุด T wave</label>
+          <p class="q-feedback" id="preQ5fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">6. ข้อใดคือค่า QRS duration ปกติที่ใช้เป็นเกณฑ์สนับสนุนการอ่าน NSR</p>
+          <label class="quiz-opt"><input type="radio" name="preQ6" value="a">A. น้อยกว่า 0.06 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ6" value="b">B. น้อยกว่า 0.12 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ6" value="c">C. มากกว่า 0.20 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ6" value="d">D. เท่ากับ 0.40 วินาทีพอดี</label>
+          <p class="q-feedback" id="preQ6fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">7. เหตุใดการยืนยัน baseline rhythm เป็น NSR ก่อนทำ primary PCI ในผู้ป่วย STEMI จึงสำคัญทางคลินิก</p>
+          <label class="quiz-opt"><input type="radio" name="preQ7" value="a">A. เพื่อใช้เปรียบเทียบ หากเกิดจังหวะผิดปกติระหว่าง/หลังหัตถการ จะแยกได้ว่าเป็นการเปลี่ยนแปลงใหม่</label>
+          <label class="quiz-opt"><input type="radio" name="preQ7" value="b">B. เพราะ NSR ยืนยันว่าไม่มีการอุดตันของหลอดเลือดหัวใจ</label>
+          <label class="quiz-opt"><input type="radio" name="preQ7" value="c">C. เพราะการทำ PCI ต้องเปลี่ยนจังหวะหัวใจให้เป็น NSR ก่อนเสมอ</label>
+          <label class="quiz-opt"><input type="radio" name="preQ7" value="d">D. ไม่มีความสำคัญทางคลินิก เป็นเพียงขั้นตอนเอกสาร</label>
+          <p class="q-feedback" id="preQ7fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">8. การประเมินว่าจังหวะ "สม่ำเสมอ" ตามเกณฑ์ NSR ยอมรับความแตกต่างของ R-R interval ได้ไม่เกินเท่าใด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ8" value="a">A. ไม่เกิน 0.04 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ8" value="b">B. ไม่เกิน 0.16 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ8" value="c">C. ไม่เกิน 0.40 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="preQ8" value="d">D. ต้องเท่ากันทุกช่องเป๊ะ ห้ามต่างเลย</label>
+          <p class="q-feedback" id="preQ8fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">9. หาก SA node หยุดทำงานกะทันหัน จุดกำเนิดไฟฟ้าสำรอง (backup pacemaker) ที่มักเข้ามาทำหน้าที่แทนเป็นลำดับถัดไปคือส่วนใด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ9" value="a">A. AV node / junctional tissue</label>
+          <label class="quiz-opt"><input type="radio" name="preQ9" value="b">B. Purkinje fibers เท่านั้น</label>
+          <label class="quiz-opt"><input type="radio" name="preQ9" value="c">C. Sinoatrial node ข้างเคียง</label>
+          <label class="quiz-opt"><input type="radio" name="preQ9" value="d">D. กล้ามเนื้อหัวใจห้องล่างโดยตรงเสมอ</label>
+          <p class="q-feedback" id="preQ9fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">10. ตามลำดับการอ่าน EKG อย่างเป็นระบบ หลังจากประเมิน Rate และ Rhythm แล้ว ขั้นตอนถัดไปที่ควรทำคือข้อใด</p>
+          <label class="quiz-opt"><input type="radio" name="preQ10" value="a">A. วัด QT interval</label>
+          <label class="quiz-opt"><input type="radio" name="preQ10" value="b">B. หา P wave และดูความสัมพันธ์กับ QRS</label>
+          <label class="quiz-opt"><input type="radio" name="preQ10" value="c">C. ดู ST segment elevation</label>
+          <label class="quiz-opt"><input type="radio" name="preQ10" value="d">D. สรุปผลการวินิจฉัยทันที</label>
+          <p class="q-feedback" id="preQ10fb"></p>
+        </div>
+
+        <div id="preScoreBanner" class="quiz-score-banner hidden">
+          คะแนนก่อนเรียนของคุณ<br><span class="big-score" id="preScoreText">0/10</span>
+        </div>
+
+        <label for="preTestDone" class="confirm-btn">ส่งคำตอบและไปเรียนกันเลย! 🎉</label>
+      </div>
+    </div>
+
+    <!-- Tab 2: Content -->
+    <div id="tab-content" class="tab-panel">
+      <div class="panel-card">
+
+        <div class="content-section">
+          <h2>คลื่นไฟฟ้าหัวใจอ่านอะไร 🫀</h2>
+          <p>หัวใจเต้นได้เพราะมีกระแสไฟฟ้าขนาดเล็กไหลผ่านกล้ามเนื้อหัวใจเป็นจังหวะ เครื่อง EKG (Electrocardiogram) บันทึกกระแสไฟฟ้านี้ออกมาเป็นเส้นกราฟบนกระดาษตาราง ทำให้เห็นการทำงานของหัวใจในแต่ละจังหวะการเต้นได้อย่างละเอียด</p>
+
+          <div class="paper-panel">
+            <svg id="diagram1" viewBox="0 0 170 150" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+
+          <p>คลื่นไฟฟ้าหัวใจ 1 จังหวะการเต้น ประกอบด้วย 3 ส่วนหลัก:</p>
+          <ul>
+            <li><strong>P wave</strong> — คลื่นลูกเล็กลูกแรก เกิดจากหัวใจห้องบน (atrium) บีบตัว</li>
+            <li><strong>QRS complex</strong> — คลื่นที่สูงและแหลมที่สุด เกิดจากหัวใจห้องล่าง (ventricle) บีบตัว</li>
+            <li><strong>T wave</strong> — คลื่นลูกโค้งท้ายสุด เกิดจากหัวใจห้องล่างคลายตัวกลับสู่สภาวะพัก</li>
+          </ul>
+          <p>ช่วงเวลาสำคัญที่ต้องวัดร่วมด้วยคือ <strong>PR interval</strong> (จาก P wave ถึงจุดเริ่ม QRS ปกติ 0.12–0.20 วินาที) และ <strong>QRS duration</strong> (ความกว้างของ QRS ปกติน้อยกว่า 0.12 วินาที)</p>
+
+          <p class="calib-note">การอ่านกระดาษ EKG: 1 ช่องเล็ก = 0.04 วินาที, 1 ช่องใหญ่ (5 ช่องเล็ก) = 0.2 วินาที — ใช้ตัวเลขนี้วัดระยะ PR interval และ R-R interval ได้โดยตรงจากกระดาษ</p>
+
+          <div class="real-image-card">
+            <img src="https://www.ncbi.nlm.nih.gov/books/NBK551635/bin/SinusRhythmLabels.svg.jpg" alt="ภาพอ้างอิง Normal Sinus Rhythm พร้อมป้ายกำกับ P wave, QRS complex, T wave, PR interval, QT interval" loading="lazy">
+            <p class="caption">ภาพอ้างอิงคลื่นไฟฟ้าหัวใจ Normal Sinus Rhythm พร้อมป้ายกำกับส่วนต่าง ๆ — ใช้เปรียบเทียบกับไดอะแกรมด้านบนได้เลย<br>ที่มา: Agateller (Anthony Atkielski), <a href="https://commons.wikimedia.org/wiki/File:SinusRhythmLabels.svg" target="_blank" rel="noopener">Public Domain ผ่าน Wikimedia Commons</a></p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Normal Sinus Rhythm คืออะไร</h2>
+          <p>จังหวะการเต้นของหัวใจปกติเริ่มต้นจาก <strong>SA node (Sinoatrial node)</strong> ซึ่งอยู่ที่หัวใจห้องบนขวา ทำหน้าที่เหมือนนาฬิกาชีวภาพของหัวใจ ปล่อยกระแสไฟฟ้าออกมาอย่างสม่ำเสมอ แล้วกระจายไปทั่วห้องบนก่อนส่งต่อไปยังห้องล่างผ่าน AV node</p>
+          <p>เมื่อจังหวะการเต้นเริ่มต้นจาก SA node และเป็นไปตามเกณฑ์ปกติครบทุกข้อ จะเรียกจังหวะนี้ว่า <strong>Normal Sinus Rhythm (NSR)</strong> ซึ่งถือเป็นจังหวะการเต้นของหัวใจที่ปกติที่สุด</p>
+        </div>
+
+        <div class="content-section">
+          <h2>5 เกณฑ์วินิจฉัย NSR</h2>
+          <ol class="criteria-list" style="list-style:none;padding:0;">
+            <li><span class="idx">1</span><div><strong>อัตราการเต้น (Rate)</strong> — <span class="val">60–100 ครั้ง/นาที</span></div></li>
+            <li><span class="idx">2</span><div><strong>จังหวะสม่ำเสมอ (Rhythm)</strong> — R-R interval แต่ละจังหวะเท่ากัน ผันแปรได้เล็กน้อยไม่เกิน <span class="val">~0.16 วินาที</span></div></li>
+            <li><span class="idx">3</span><div><strong>มี P wave นำหน้า QRS ทุกครั้ง</strong> — อัตราส่วน 1 P : 1 QRS เสมอ</div></li>
+            <li><span class="idx">4</span><div><strong>P wave หัวตั้ง (positive)</strong> — ใน Lead II และ aVF, หัวคว่ำใน aVR</div></li>
+            <li><span class="idx">5</span><div><strong>PR interval ปกติและคงที่</strong> — <span class="val">0.12–0.20 วินาที</span> (3–5 ช่องเล็ก) ทุกจังหวะ</div></li>
+          </ol>
+
+          <h3>ทริคจำ 5 นิ้ว NSR 🖐️</h3>
+          <p>ใช้มือของตัวเองเป็นตัวช่วยจำ นับ 1 เกณฑ์ต่อ 1 นิ้ว จะพกติดตัวไปทุกที่และนึกออกได้ทันทีตอนอ่าน EKG จริง</p>
+          <div class="fingers-mnemonic">
+            <div class="fingers-row">
+              <div class="finger" style="height:66%;"><span class="tip">1</span></div>
+              <div class="finger" style="height:88%;"><span class="tip">2</span></div>
+              <div class="finger" style="height:100%;"><span class="tip">3</span></div>
+              <div class="finger" style="height:90%;"><span class="tip">4</span></div>
+              <div class="finger" style="height:72%;"><span class="tip">5</span></div>
+            </div>
+            <div class="labels-row">
+              <div class="lab"><b>เร็ว</b>Rate 60–100</div>
+              <div class="lab"><b>สม่ำเสมอ</b>R-R เท่ากัน</div>
+              <div class="lab"><b>พีมาก่อน</b>P นำ QRS</div>
+              <div class="lab"><b>พีตั้งตรง</b>P บวกใน II</div>
+              <div class="lab"><b>พีอาร์คงที่</b>PR 0.12–0.20</div>
+            </div>
+          </div>
+
+          <div class="mnemonic-banner">
+            <p>“เร็ว — สม่ำเสมอ — พีมาก่อน — พีตั้งตรง — พีอาร์คงที่”</p>
+            <span class="small">ท่องประโยคนี้ตามลำดับนิ้วมือทั้ง 5 แล้วเทียบกับ EKG จริงทุกครั้ง จะไม่พลาดเกณฑ์ข้อไหนไปเลย</span>
+          </div>
+
+          <div class="paper-panel">
+            <svg id="diagram2" viewBox="0 0 470 150" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>วิธีอ่าน EKG อย่างเป็นระบบ</h2>
+          <ol class="steps">
+            <li><strong>ดู Rate</strong> — นับจำนวน QRS ใน 6 วินาที แล้วคูณ 10 หรือใช้วิธี 300/(จำนวนช่องใหญ่ระหว่าง R-R)</li>
+            <li><strong>ดู Rhythm</strong> — วัดระยะ R-R ของแต่ละจังหวะ เท่ากันหรือไม่</li>
+            <li><strong>หา P wave</strong> — มีอยู่หน้าทุก QRS หรือไม่ รูปร่างหัวตั้งใน Lead II หรือเปล่า</li>
+            <li><strong>วัด PR interval</strong> — อยู่ในช่วง 0.12–0.20 วินาที และคงที่ทุกจังหวะหรือไม่</li>
+            <li><strong>สรุปผล</strong> — ถ้าครบทั้ง 5 เกณฑ์ สามารถอ่านว่าเป็น Normal Sinus Rhythm ได้</li>
+          </ol>
+        </div>
+
+        <div class="content-section">
+          <h2>เปรียบเทียบกับจังหวะใกล้เคียงที่พบบ่อย</h2>
+          <table class="compare-table">
+            <tr><th>จังหวะ</th><th>ลักษณะสำคัญ</th></tr>
+            <tr><td>Sinus tachycardia</td><td>เข้าเกณฑ์ NSR ทุกข้อ ยกเว้นอัตราการเต้นมากกว่า 100 ครั้ง/นาที</td></tr>
+            <tr><td>Sinus bradycardia</td><td>เข้าเกณฑ์ NSR ทุกข้อ ยกเว้นอัตราการเต้นน้อยกว่า 60 ครั้ง/นาที</td></tr>
+            <tr><td>Sinus arrhythmia</td><td>R-R interval ไม่สม่ำเสมอตามจังหวะการหายใจ พบบ่อยในเด็กและคนหนุ่มสาว ถือเป็นภาวะปกติได้</td></tr>
+            <tr><td>Sinus rhythm with 1st° AV block</td><td>เข้าเกณฑ์ NSR ทุกข้อ ยกเว้น PR interval ยาวเกิน 0.20 วินาที (แต่ยังคงที่ทุกจังหวะ)</td></tr>
+          </table>
+        </div>
+
+        <div class="content-section">
+          <h2>ดูให้ลึกขึ้น: P wave และแกนไฟฟ้าหัวใจ</h2>
+          <p>นอกจากหัวตั้งใน Lead II แล้ว P wave ปกติยังมีเกณฑ์รูปร่างที่ใช้แยกความผิดปกติได้อีกหลายอย่าง:</p>
+          <ul>
+            <li><strong>ความสูง (amplitude)</strong> — ไม่ควรเกิน 2.5 มิลลิเมตรใน Lead II หากสูงเกินนี้เรียกว่า P pulmonale ซึ่งบ่งชี้ภาวะห้องบนขวาโต</li>
+            <li><strong>ความกว้าง (duration)</strong> — ไม่ควรเกิน 0.12 วินาที หากกว้างเกินหรือมีรอยหยักสองยอด (notched) เรียกว่า P mitrale ซึ่งบ่งชี้ภาวะห้องบนซ้ายโต</li>
+            <li><strong>ทิศทางใน Lead อื่น</strong> — P wave ที่มาจาก SA node จริงจะหัวตั้งใน Lead I, II, aVF ด้วย ไม่ใช่แค่ Lead II เพียงอย่างเดียว</li>
+          </ul>
+          <p>ถ้า P wave หัวคว่ำใน Lead II ทั้งที่ QRS แคบปกติ ให้สงสัยว่าจุดกำเนิดสัญญาณอาจไม่ใช่ SA node แต่เป็นตำแหน่งอื่น เช่น low atrial pacemaker หรือ junctional rhythm ที่มี retrograde P wave ควรตรวจสอบเพิ่มเติมก่อนสรุปว่าเป็น NSR</p>
+        </div>
+
+        <div class="content-section">
+          <h2>สิ่งรบกวนสัญญาณ (Artifact) vs การเปลี่ยนแปลงจังหวะจริง</h2>
+          <p>ก่อนสรุปว่าจังหวะหัวใจผิดปกติ ควรแยกให้ออกก่อนว่าเส้นที่เห็นเป็นสัญญาณรบกวนหรือเป็นการเปลี่ยนแปลงของหัวใจจริง เพราะทั้งสองแบบหน้าตาคล้ายกันมาก:</p>
+          <ul>
+            <li><strong>เส้นฐานสั่นไหวถี่ ๆ (baseline tremor)</strong> — มักเกิดจากผู้ป่วยตัวสั่น หนาว หรือกล้ามเนื้อเกร็ง ไม่ใช่ atrial fibrillation</li>
+            <li><strong>เส้นฐานลอยขึ้นลงช้า ๆ (wandering baseline)</strong> — มักเกิดจากการหายใจแรงหรือ electrode หลุดหลวม ไม่ใช่ ST segment เปลี่ยนแปลงจริง</li>
+            <li><strong>สัญญาณหายไปเป็นช่วง ๆ</strong> — ตรวจสอบการติด electrode และสาย lead ก่อนคิดว่าเป็น asystole</li>
+          </ul>
+          <p><strong>หลักปฏิบัติ:</strong> เมื่อพบสัญญาณผิดปกติกะทันหัน ให้ประเมินอาการและสัญญาณชีพของผู้ป่วยควบคู่กันเสมอ ตรวจสอบการติด electrode ก่อน แล้วจึงสรุปผลจากคลื่นไฟฟ้าหัวใจ — ไม่ตัดสินจากเส้นกราฟเพียงอย่างเดียว</p>
+        </div>
+
+        <div class="content-section">
+          <h2>QT interval สั้น ๆ ที่ควรรู้</h2>
+          <p><strong>QT interval</strong> คือระยะตั้งแต่เริ่มต้น QRS จนถึงสิ้นสุด T wave สะท้อนเวลาที่หัวใจห้องล่างใช้ในการ depolarize และ repolarize ทั้งหมด ค่าที่ปรับตามอัตราการเต้นแล้วเรียกว่า <strong>QTc</strong> (ปกติไม่เกินประมาณ 440–450 มิลลิวินาที)</p>
+          <p>ในบริบทดูแลผู้ป่วยภาวะหัวใจขาดเลือดเฉียบพลัน ยาหลายชนิดที่ใช้ร่วมด้วยสามารถทำให้ QTc ยืดยาวผิดปกติได้ ซึ่งเพิ่มความเสี่ยงต่อ <strong>Torsades de Pointes</strong> ภาวะหัวใจเต้นผิดจังหวะรุนแรงที่อาจถึงชีวิต การสังเกต QT interval ควบคู่กับ NSR จึงเป็นอีกจุดที่ทีมดูแลควรให้ความสำคัญ ไม่ใช่ดูแค่ Rate และ Rhythm เพียงอย่างเดียว</p>
+        </div>
+
+        <div class="content-section">
+          <h2>การประยุกต์ใช้ในบริบททีม RHT STEMI</h2>
+          <p>สำหรับทีม Rapid Heart Team ที่ดูแลผู้ป่วย STEMI การอ่าน NSR ให้แม่นยำมีความสำคัญมากกว่าการท่องจำเกณฑ์เพื่อสอบผ่าน:</p>
+          <ul>
+            <li><strong>ใช้เป็น baseline เปรียบเทียบ</strong> — บันทึกจังหวะและอัตราการเต้นตั้งแต่แรกรับ เพื่อใช้เทียบกับ EKG ครั้งถัดไประหว่างและหลังทำ primary PCI</li>
+            <li><strong>จับสัญญาณเตือนได้เร็ว</strong> — หากจังหวะที่เคยเป็น NSR เปลี่ยนไปกะทันหัน (QRS กว้างขึ้น, จังหวะไม่สม่ำเสมอ, อัตราเปลี่ยนแปลงมาก) ต้องประเมินอาการและรายงานทันที เพราะอาจเป็นสัญญาณของภาวะแทรกซ้อนทางหัวใจ</li>
+            <li><strong>บันทึกให้ครบถ้วน</strong> — ระบุอัตราการเต้น เวลาที่บันทึก และเปรียบเทียบกับผลครั้งก่อนหน้าเสมอ ไม่ใช่เขียนแค่คำว่า "NSR" เพียงคำเดียว</li>
+          </ul>
+        </div>
+
+        <label for="contentDone" class="confirm-btn">เรียนเนื้อหาจบแล้ว ไปทำแบบทดสอบหลังเรียนกันเถอะ! 🎓</label>
+      </div>
+    </div>
+
+    <!-- Tab 3: Post-test -->
+    <div id="tab-post" class="tab-panel">
+      <div class="panel-card">
+        <h2>แบบทดสอบหลังเรียน 🌟</h2>
+        <p>ข้อสอบชุดนี้เป็นคนละชุดกับก่อนเรียน และยากขึ้นอีกขั้น เน้นโจทย์สถานการณ์และการตีความ เพื่อวัดความเข้าใจที่แท้จริงหลังเรียนเนื้อหาในแท็บที่ 2</p>
+
+        <div class="quiz-q">
+          <p class="q-title">1. ระยะห่างระหว่าง R wave สองจุดวัดได้ 25 ช่องเล็ก (1 ช่องเล็ก = 0.04 วินาที) อัตราการเต้นของหัวใจโดยประมาณคือเท่าใด</p>
+          <label class="quiz-opt"><input type="radio" name="postQ1" value="a">A. 60 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="postQ1" value="b">B. 75 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="postQ1" value="c">C. 100 ครั้ง/นาที</label>
+          <label class="quiz-opt"><input type="radio" name="postQ1" value="d">D. 120 ครั้ง/นาที</label>
+          <p class="q-feedback" id="postQ1fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">2. ผู้ป่วยมี P wave นำหน้า QRS ทุกครั้ง, PR interval คงที่ 0.16 วินาที, QRS แคบ, จังหวะสม่ำเสมอ, อัตรา 48 ครั้ง/นาที ข้อใดถูกต้องที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="postQ2" value="a">A. Normal sinus rhythm</label>
+          <label class="quiz-opt"><input type="radio" name="postQ2" value="b">B. Sinus bradycardia</label>
+          <label class="quiz-opt"><input type="radio" name="postQ2" value="c">C. Sinus arrest</label>
+          <label class="quiz-opt"><input type="radio" name="postQ2" value="d">D. Third-degree AV block</label>
+          <p class="q-feedback" id="postQ2fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">3. ข้อใดอธิบายลักษณะของ Sinus arrhythmia และเหตุผลที่ยังถือเป็น variant ที่ไม่อันตรายได้ถูกต้องที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="postQ3" value="a">A. R-R interval เปลี่ยนแปลงตามจังหวะการหายใจ พบบ่อยในเด็ก/คนหนุ่มสาว</label>
+          <label class="quiz-opt"><input type="radio" name="postQ3" value="b">B. R-R interval เปลี่ยนแปลงแบบสุ่มไม่สัมพันธ์กับการหายใจ ต้องรักษาด่วน</label>
+          <label class="quiz-opt"><input type="radio" name="postQ3" value="c">C. เป็นภาวะที่ P wave หายไปเป็นบางจังหวะ</label>
+          <label class="quiz-opt"><input type="radio" name="postQ3" value="d">D. เป็นภาวะที่ QRS กว้างผิดปกติเป็นพัก ๆ</label>
+          <p class="q-feedback" id="postQ3fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">4. ถ้าพบว่า P wave หัวคว่ำ (negative) ใน lead II แต่ QRS ยังคงแคบและ PR interval ปกติ ควรตีความอย่างไร</p>
+          <label class="quiz-opt"><input type="radio" name="postQ4" value="a">A. ยังคงเป็น NSR ปกติ เพราะ QRS ปกติ</label>
+          <label class="quiz-opt"><input type="radio" name="postQ4" value="b">B. น่าจะไม่ใช่ NSR อาจเป็นจังหวะจากตำแหน่งอื่นนอก SA node ควรตรวจสอบเพิ่มเติม</label>
+          <label class="quiz-opt"><input type="radio" name="postQ4" value="c">C. เป็นสัญญาณของ ventricular tachycardia เสมอ</label>
+          <label class="quiz-opt"><input type="radio" name="postQ4" value="d">D. เป็น artifact ที่ไม่มีนัยสำคัญ ไม่ต้องสนใจ</label>
+          <p class="q-feedback" id="postQ4fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">5. การยืดยาวของ QT interval (prolonged QTc) มีความสำคัญทางคลินิกอย่างไรในผู้ป่วยที่ได้รับยาบางชนิดระหว่างดูแลภาวะหัวใจขาดเลือดเฉียบพลัน</p>
+          <label class="quiz-opt"><input type="radio" name="postQ5" value="a">A. ไม่มีนัยสำคัญใดๆ</label>
+          <label class="quiz-opt"><input type="radio" name="postQ5" value="b">B. เพิ่มความเสี่ยงต่อการเกิด Torsades de Pointes ซึ่งอันตรายถึงชีวิต</label>
+          <label class="quiz-opt"><input type="radio" name="postQ5" value="c">C. เป็นสัญญาณว่าผู้ป่วยหายจากภาวะหัวใจขาดเลือดแล้ว</label>
+          <label class="quiz-opt"><input type="radio" name="postQ5" value="d">D. บ่งชี้ว่าหยุดการติดตาม EKG ได้</label>
+          <p class="q-feedback" id="postQ5fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">6. ผู้ป่วย STEMI ที่เดิมมี NSR คงที่ จู่ ๆ พบ QRS กว้างขึ้นผิดปกติและจังหวะเริ่มไม่สม่ำเสมอ ทีม RHT ควรทำสิ่งใดเป็นลำดับแรก</p>
+          <label class="quiz-opt"><input type="radio" name="postQ6" value="a">A. รอดูอาการต่ออีก 1 ชั่วโมงก่อนรายงาน</label>
+          <label class="quiz-opt"><input type="radio" name="postQ6" value="b">B. ประเมินอาการและสัญญาณชีพทันที แล้วรายงานแพทย์/ทีมทันที</label>
+          <label class="quiz-opt"><input type="radio" name="postQ6" value="c">C. ปิดเครื่องมอนิเตอร์เพื่อลด false alarm</label>
+          <label class="quiz-opt"><input type="radio" name="postQ6" value="d">D. เพิ่มสาร IV fluid ให้เร็วขึ้นโดยไม่ประเมินอาการ</label>
+          <p class="q-feedback" id="postQ6fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">7. P wave ปกติควรมีความสูง (amplitude) ไม่เกินเท่าใดใน lead II จึงจะถือว่าปกติ (ไม่เข้าเกณฑ์ P pulmonale)</p>
+          <label class="quiz-opt"><input type="radio" name="postQ7" value="a">A. 1.0 มิลลิเมตร</label>
+          <label class="quiz-opt"><input type="radio" name="postQ7" value="b">B. 2.5 มิลลิเมตร</label>
+          <label class="quiz-opt"><input type="radio" name="postQ7" value="c">C. 5.0 มิลลิเมตร</label>
+          <label class="quiz-opt"><input type="radio" name="postQ7" value="d">D. 10.0 มิลลิเมตร</label>
+          <p class="q-feedback" id="postQ7fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">8. จาก EKG ที่มี Rate 88, Rhythm สม่ำเสมอ, P wave หัวตั้งนำหน้าทุก QRS, PR interval 0.24 วินาทีคงที่ทุกจังหวะ, QRS แคบ ข้อใดสรุปได้ถูกต้องที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="postQ8" value="a">A. Normal sinus rhythm เพราะ Rate และ Rhythm ปกติ</label>
+          <label class="quiz-opt"><input type="radio" name="postQ8" value="b">B. Sinus rhythm with first-degree AV block เพราะ PR interval ยาวเกิน 0.20 วินาที</label>
+          <label class="quiz-opt"><input type="radio" name="postQ8" value="c">C. Second-degree AV block</label>
+          <label class="quiz-opt"><input type="radio" name="postQ8" value="d">D. Wolff-Parkinson-White syndrome</label>
+          <p class="q-feedback" id="postQ8fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">9. เมื่อบันทึกผลการอ่าน EKG ของผู้ป่วยในทีม RHT STEMI ข้อมูลใดควรระบุร่วมกับ "Normal sinus rhythm" เพื่อความครบถ้วนของการรายงาน</p>
+          <label class="quiz-opt"><input type="radio" name="postQ9" value="a">A. ระบุเฉพาะคำว่า NSR ก็เพียงพอ ไม่ต้องมีตัวเลขอื่น</label>
+          <label class="quiz-opt"><input type="radio" name="postQ9" value="b">B. อัตราการเต้น เวลาที่บันทึก และเปรียบเทียบกับ EKG ครั้งก่อนหน้า (ถ้ามี)</label>
+          <label class="quiz-opt"><input type="radio" name="postQ9" value="c">C. ระบุเฉพาะชื่อผู้บันทึกเท่านั้น</label>
+          <label class="quiz-opt"><input type="radio" name="postQ9" value="d">D. ไม่จำเป็นต้องบันทึกหากผลปกติ</label>
+          <p class="q-feedback" id="postQ9fb"></p>
+        </div>
+
+        <div class="quiz-q">
+          <p class="q-title">10. ผู้ป่วยมีอัตราการเต้นหัวใจวัดได้ 100 ครั้ง/นาทีพอดี พร้อมเข้าเกณฑ์ NSR ข้ออื่นครบถ้วน ข้อใดถูกต้องที่สุด</p>
+          <label class="quiz-opt"><input type="radio" name="postQ10" value="a">A. ยังถือเป็น NSR เพราะ 100 อยู่ในขอบเขตบน (60–100) ของเกณฑ์ปกติพอดี</label>
+          <label class="quiz-opt"><input type="radio" name="postQ10" value="b">B. ถือว่าผิดปกติทันที ต้องรายงานเป็น sinus tachycardia</label>
+          <label class="quiz-opt"><input type="radio" name="postQ10" value="c">C. ต้องวัดซ้ำ 3 รอบก่อนจึงจะสรุปได้</label>
+          <label class="quiz-opt"><input type="radio" name="postQ10" value="d">D. ไม่สามารถสรุปได้จนกว่าจะทำ 12-lead EKG เท่านั้น</label>
+          <p class="q-feedback" id="postQ10fb"></p>
+        </div>
+
+        <div id="postScoreBanner" class="quiz-score-banner hidden">
+          คะแนนหลังเรียนของคุณ<br><span class="big-score" id="postScoreText">0/10</span>
+        </div>
+
+        <label for="postTestDone" class="confirm-btn">ส่งคำตอบแบบทดสอบหลังเรียน 🎊</label>
+        <noscript><p style="color:var(--ink-soft);font-size:.8rem;margin-top:.6rem;">การตรวจคะแนนอัตโนมัตินี้ต้องใช้ JavaScript — ถ้าเบราว์เซอร์ปิดการใช้งานอยู่ ยังตอบแบบทดสอบและเทียบกับเฉลยในแท็บที่ 2 ได้ด้วยตัวเองตามปกติ</p></noscript>
+
+        <div class="score-widget">
+          <h3>สรุปพัฒนาการของคุณ</h3>
+          <p id="scoreWidgetHint">ทำแบบทดสอบก่อนเรียนและหลังเรียนให้ครบก่อน จะเห็นกราฟเปรียบเทียบคะแนนตรงนี้โดยอัตโนมัติ</p>
+          <div id="scoreResult" class="score-result hidden">
+            <div class="bars">
+              <div class="bar-col"><span class="pct" id="prePct"></span><div class="bar pre" id="preBar"></div><span class="tag">ก่อนเรียน</span></div>
+              <div class="bar-col"><span class="pct" id="postPct"></span><div class="bar post" id="postBar"></div><span class="tag">หลังเรียน</span></div>
+            </div>
+            <p id="scoreMsg"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+(function(){
+  // ============================================================
+  // Navigation, gating, and the how-to panel all already work via
+  // pure CSS (checkbox/radio inputs + <label for="..."> + :has()) —
+  // no JavaScript required for any of that. Everything below is
+  // optional enhancement layered on top: it personalises the
+  // greeting, prevents accidentally un-confirming a step, keeps the
+  // locked tabs keyboard-safe, and powers the score comparison and
+  // diagrams. If JS fails to run at all, the lesson and its gating
+  // still work correctly through CSS alone.
+  // ============================================================
+
+  // ---- personalise the greeting once the lesson is entered ----
+  var enterToggle = document.getElementById("enterToggle");
+  if (enterToggle) enterToggle.addEventListener("change", function(){
+    if (!this.checked) return;
+    var name = (document.getElementById("nameInput").value || "").trim();
+    var org = (document.getElementById("orgInput").value || "").trim();
+    document.getElementById("greetingText").textContent = name ? ("สวัสดีคุณ " + name + " 💖") : "ยินดีต้อนรับเข้าสู่บทเรียน 💖";
+    document.getElementById("userOrg").textContent = org;
+    window.scrollTo(0,0);
+  });
+
+  // ---- gate helper: once a confirm checkbox is checked, unlock the
+  // next tab, jump to it, and lock the checkbox so it can't be
+  // accidentally un-confirmed (re-locking the tab by mistake) ----
+  function wireGate(gateId, nextTabId){
+    var gate = document.getElementById(gateId);
+    var nextTab = document.getElementById(nextTabId);
+    if (!gate || !nextTab) return;
+    nextTab.disabled = !gate.checked;
+    gate.addEventListener("change", function(){
+      nextTab.disabled = !this.checked;
+      if (this.checked){
+        this.disabled = true;
+        nextTab.checked = true;
+        window.scrollTo(0,0);
+      }
+    });
+  }
+  wireGate("preTestDone", "tabContent");
+  wireGate("contentDone", "tabPost");
+
+  // ---- scroll to top whenever a tab is switched ----
+  document.querySelectorAll('input[name="tabgroup"]').forEach(function(radio){
+    radio.addEventListener("change", function(){ if (this.checked) window.scrollTo(0,0); });
+  });
+
+  // ============================================================
+  // Quiz grading — the pre-test and post-test are now two DIFFERENT
+  // 10-question sets, so each has its own answer key. Correct
+  // answers match the criteria taught in the "เนื้อหาบทเรียน" tab
+  // plus standard ECG interpretation references.
+  // ============================================================
+  var answerKeys = {
+    pre:  { 1:"b", 2:"b", 3:"b", 4:"b", 5:"a", 6:"b", 7:"a", 8:"b", 9:"a", 10:"b" },
+    post: { 1:"a", 2:"b", 3:"a", 4:"b", 5:"b", 6:"b", 7:"b", 8:"b", 9:"b", 10:"a" }
+  };
+
+  function gradeQuiz(prefix){
+    var key = answerKeys[prefix];
+    var total = 10;
+    var score = 0;
+    for (var i=1;i<=total;i++){
+      var name = prefix + "Q" + i;
+      var chosen = document.querySelector('input[name="'+name+'"]:checked');
+      var fb = document.getElementById(name+"fb");
+      var correctInput = document.querySelector('input[name="'+name+'"][value="'+key[i]+'"]');
+      var correctLabel = correctInput ? correctInput.closest("label") : null;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(function(inp){
+        var lbl = inp.closest("label");
+        if (lbl) lbl.classList.remove("correct-answer");
+      });
+      if (chosen && chosen.value === key[i]){
+        score++;
+        if (fb){ fb.textContent = "✅ ถูกต้อง"; fb.className = "q-feedback ok"; }
+      } else {
+        if (correctLabel) correctLabel.classList.add("correct-answer");
+        if (fb){
+          fb.textContent = chosen ? "❌ ไม่ถูกต้อง — เฉลยคือข้อ " + key[i].toUpperCase() : "⚠️ ยังไม่ได้ตอบ — เฉลยคือข้อ " + key[i].toUpperCase();
+          fb.className = "q-feedback no";
+        }
+      }
+    }
+    return score;
+  }
+
+  var quizState = { pre: null, post: null };
+
+  function updateComparison(){
+    var hint = document.getElementById("scoreWidgetHint");
+    var result = document.getElementById("scoreResult");
+    if (quizState.pre === null || quizState.post === null){
+      if (hint) hint.classList.remove("hidden");
+      if (result) result.classList.add("hidden");
+      return;
+    }
+    if (hint) hint.classList.add("hidden");
+    if (result) result.classList.remove("hidden");
+
+    var prePct = Math.round((quizState.pre/10)*100);
+    var postPct = Math.round((quizState.post/10)*100);
+    document.getElementById("preBar").style.height = prePct + "%";
+    document.getElementById("postBar").style.height = postPct + "%";
+    document.getElementById("prePct").textContent = quizState.pre + "/10";
+    document.getElementById("postPct").textContent = quizState.post + "/10";
+
+    var diff = quizState.post - quizState.pre;
+    var msg;
+    if (diff > 0){
+      msg = "🎉 คะแนนดีขึ้น " + diff + " ข้อ เก่งมาก! ลองย้อนไปทบทวนทริคจำ 5 นิ้วในแท็บที่ 2 อีกครั้งเพื่อความมั่นใจก่อนใช้งานจริง";
+    } else if (diff === 0){
+      msg = "คะแนนเท่าเดิม ลองกลับไปทบทวนเกณฑ์ทั้ง 5 ข้อในแท็บที่ 2 อีกรอบ แล้วฝึกอ่าน EKG เพิ่มเติมดูนะ";
+    } else {
+      msg = "ไม่เป็นไร ลองกลับไปอ่านเนื้อหาในแท็บที่ 2 อีกครั้งอย่างละเอียด โดยเฉพาะ 5 เกณฑ์วินิจฉัยและทริคจำ แล้วค่อยฝึกอ่านซ้ำ พัฒนาการจะค่อย ๆ ดีขึ้นแน่นอน";
+    }
+    document.getElementById("scoreMsg").textContent = msg;
+  }
+
+  // ============================================================
+  // Background submission to Google Forms — DISABLED for now.
+  // The 2 original Google Forms only have entry IDs for the old
+  // 5-question sets, which no longer match this new 10-question
+  // content. Once new quiz-enabled Forms exist (see the Apps
+  // Script provided separately) and you grab their pre-filled-link
+  // entry IDs the same way as before, paste them here and this
+  // will submit automatically again, exactly like it did before.
+  // ============================================================
+  function submitToGoogleForm(actionUrl, prefix){
+    // Intentionally a no-op until new form entry IDs are wired in.
+  }
+
+  var preTestDone = document.getElementById("preTestDone");
+  if (preTestDone) preTestDone.addEventListener("change", function(){
+    if (!this.checked) return;
+    quizState.pre = gradeQuiz("pre");
+    document.getElementById("preScoreText").textContent = quizState.pre + "/10";
+    document.getElementById("preScoreBanner").classList.remove("hidden");
+    updateComparison();
+    submitToGoogleForm(null, "pre");
+  });
+
+  var postTestDone = document.getElementById("postTestDone");
+  if (postTestDone) postTestDone.addEventListener("change", function(){
+    if (!this.checked) return;
+    this.disabled = true;
+    quizState.post = gradeQuiz("post");
+    document.getElementById("postScoreText").textContent = quizState.post + "/10";
+    document.getElementById("postScoreBanner").classList.remove("hidden");
+    updateComparison();
+    submitToGoogleForm(null, "post");
+  });
+
+  // ============================================================
+  // DECORATIVE — labelled ECG paper diagrams. Wrapped in try/catch
+  // so any failure here is isolated and can never take down the
+  // navigation, gating, or score widget registered above.
+  // ============================================================
+  try {
+
+  function ekgPathD(cycles, cw, baseline, amp){
+    var d = "M0," + baseline;
+    for (var i=0;i<cycles;i++){
+      var x = i*cw;
+      d += " L"+(x+18)+","+baseline;
+      d += " C"+(x+24)+","+baseline+" "+(x+26)+","+(baseline-amp*0.28)+" "+(x+30)+","+(baseline-amp*0.28);
+      d += " C"+(x+34)+","+(baseline-amp*0.28)+" "+(x+36)+","+baseline+" "+(x+42)+","+baseline;
+      d += " L"+(x+54)+","+baseline;
+      d += " L"+(x+58)+","+(baseline+amp*0.22);
+      d += " L"+(x+66)+","+(baseline-amp*0.95);
+      d += " L"+(x+74)+","+(baseline+amp*0.55);
+      d += " L"+(x+82)+","+baseline;
+      d += " L"+(x+96)+","+baseline;
+      d += " C"+(x+102)+","+baseline+" "+(x+106)+","+(baseline-amp*0.34)+" "+(x+112)+","+(baseline-amp*0.34);
+      d += " C"+(x+118)+","+(baseline-amp*0.34)+" "+(x+122)+","+baseline+" "+(x+128)+","+baseline;
+      d += " L"+(x+150)+","+baseline;
+    }
+    return d;
+  }
+
+  // ---- single labelled complex ----
+  var d1 = document.getElementById("diagram1");
+  var single = ekgPathD(1,150,90,58);
+  d1.innerHTML =
+    '<path class="trace-line" d="'+single+'"></path>' +
+    '<text class="wave-label" x="22" y="58">P</text>' +
+    '<text class="wave-label" x="58" y="24">QRS</text>' +
+    '<text class="wave-label" x="102" y="55">T</text>' +
+    '<line class="dim-line" x1="18" y1="20" x2="18" y2="112"></line>' +
+    '<line class="dim-line" x1="54" y1="20" x2="54" y2="112"></line>' +
+    '<line class="dim-line" x1="18" y1="112" x2="54" y2="112"></line>' +
+    '<text class="dim-text" x="14" y="124">PR interval</text>' +
+    '<line class="dim-line" x1="82" y1="20" x2="82" y2="132"></line>' +
+    '<line class="dim-line" x1="96" y1="20" x2="96" y2="132"></line>' +
+    '<line class="dim-line" x1="82" y1="132" x2="96" y2="132"></line>' +
+    '<text class="dim-text" x="66" y="144">ST segment</text>';
+
+  // ---- 3-cycle strip showing regular R-R ----
+  var d2 = document.getElementById("diagram2");
+  var strip = ekgPathD(3,150,90,40);
+  d2.innerHTML =
+    '<path class="trace-line" d="'+strip+'"></path>' +
+    '<line class="dim-line" x1="66" y1="18" x2="66" y2="120"></line>' +
+    '<line class="dim-line" x1="216" y1="18" x2="216" y2="120"></line>' +
+    '<line class="dim-line" x1="366" y1="18" x2="366" y2="120"></line>' +
+    '<line class="dim-line" x1="66" y1="118" x2="216" y2="118"></line>' +
+    '<line class="dim-line" x1="216" y1="132" x2="366" y2="132"></line>' +
+    '<text class="dim-text" x="118" y="112">R-R</text>' +
+    '<text class="dim-text" x="255" y="145">R-R (เท่ากัน)</text>';
+
+  } catch(err){
+    if (window.console && console.warn) console.warn("EKG decorative diagrams skipped:", err);
+  }
+})();
+</script>
+</body>
+</html>
